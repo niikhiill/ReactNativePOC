@@ -1,7 +1,12 @@
 import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
-import {View, Text, StyleSheet, ImageBackground} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ImageBackground,
+  TouchableOpacity,
+} from 'react-native';
 import bgCover from '../../assets/bgimage.png';
 
 export default function Profile({route, navigation}) {

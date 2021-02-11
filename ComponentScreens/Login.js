@@ -12,10 +12,7 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import bgCover from '../assets/bgimage.png';
 import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
 import index from './Tab';
-
-const Stack = createStackNavigator();
 
 export default class LoginScreen extends Component {
   constructor(props) {

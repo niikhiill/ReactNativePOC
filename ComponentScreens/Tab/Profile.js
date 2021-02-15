@@ -1,22 +1,53 @@
-import {NavigationContainer} from '@react-navigation/native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   View,
   Text,
   StyleSheet,
   ImageBackground,
   TouchableOpacity,
+  BackHandler,
 } from 'react-native';
 import bgCover from '../../assets/bgimage.png';
+import {useRoute, useFocusEffect} from '@react-navigation/native';
+
+export const handleBackButton = () => {
+  // ToastAndroid.show('Back button is pressed', ToastAndroid.SHORT);
+  return true;
+};
 
 export default function Profile({route, navigation}) {
   const {mail} = route.params;
+
+  // useEffect(() => {
+  //   const unsubscribe = BackHandler.addEventListener(
+  //     'hardwareBackPress',
+  //     handleBackButton,
+  //   );
+
+  //   return () => true;
+  // }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        if (route.name === 'Profile') {
+          return true;
+        } else {
+          return false;
+        }
+      };
+
+      BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+      return () =>
+        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    }, [route]),
+  );
+
   return (
     <ImageBackground source={bgCover} style={{height: '100%', width: '100%'}}>
       <View style={styles.ViewStyle}>
-        <Text style={{fontSize: 30, color: 'white', fontWeight: 'bold'}}>
-          Welcome {JSON.stringify(mail)}
-        </Text>
+        <Text style={styles.title}>Welcome {mail}</Text>
         <TouchableOpacity
           style={{marginTop: 15}}
           onPress={() => navigation.navigate('Login')}>
@@ -32,5 +63,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
+  },
+  title: {
+    fontSize: 30,
+    color: 'white',
+    fontWeight: 'bold',
   },
 });

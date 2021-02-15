@@ -4,17 +4,13 @@ import {
   Text,
   StyleSheet,
   TextInput,
-  Button,
   TouchableOpacity,
   ImageBackground,
   KeyboardAvoidingView,
 } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 import bgCover from '../assets/bgimage.png';
-import {NavigationContainer} from '@react-navigation/native';
-import index from './Tab';
 
-export default class LoginScreen extends Component {
+export default class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,10 +19,10 @@ export default class LoginScreen extends Component {
     };
   }
 
-  ValidateFields = () => {
+  validateFields = () => {
     const {mail, password} = this.state;
 
-    var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    const mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
     if (!mail.match(mailformat)) {
       alert('Please provide valid email');
@@ -48,7 +44,7 @@ export default class LoginScreen extends Component {
     return (
       <ImageBackground source={bgCover} style={{height: '100%', width: '100%'}}>
         <KeyboardAvoidingView behavior="padding" style={styles.ViewStyle}>
-          <Text style={styles.TextStyle}>Sign In</Text>
+          <Text style={styles.TextStyle}>MovieApp</Text>
 
           <TextInput
             style={styles.TextInputStyle1}
@@ -56,6 +52,12 @@ export default class LoginScreen extends Component {
             placeholderTextColor={'rgba(255,255,255,0.3)'}
             onChangeText={(value) => this.setState({mail: value})}
             autoCorrect={false}
+            returnKeyType="next"
+            onSubmitEditing={() => {
+              this.Password.focus();
+            }}
+            blurOnSubmit={false}
+            value={mail}
           />
 
           <TextInput
@@ -64,12 +66,16 @@ export default class LoginScreen extends Component {
             placeholderTextColor={'rgba(255,255,255,0.3)'}
             onChangeText={(value) => this.setState({password: value})}
             secureTextEntry={true}
+            ref={(input) => {
+              this.Password = input;
+            }}
+            value={password}
           />
 
           <TouchableOpacity
             style={styles.ButtonStyle}
             onPress={() =>
-              this.ValidateFields()
+              this.validateFields()
                 ? this.props.navigation.navigate('Tab', {
                     screen: 'Profile',
                     params: {mail},
@@ -100,7 +106,7 @@ export default class LoginScreen extends Component {
   }
 }
 
-styles = StyleSheet.create({
+const styles = StyleSheet.create({
   ViewStyle: {
     flex: 1,
     justifyContent: 'center',
@@ -115,33 +121,36 @@ styles = StyleSheet.create({
 
   TextInputStyle1: {
     height: 58,
-    width: '95%',
+    width: '85%',
     backgroundColor: 'rgba(0,0,0,0.2)',
     color: 'rgba(255,255,255,0.7)',
     marginTop: 25,
     fontSize: 20,
     padding: 15,
     justifyContent: 'center',
+    borderRadius: 7,
   },
 
   TextInputStyle2: {
     height: 58,
-    width: '95%',
-    marginTop: 20,
+    width: '85%',
+    marginTop: 10,
     backgroundColor: 'rgba(0,0,0,0.2)',
     color: 'rgba(255,255,255,0.7)',
     fontSize: 20,
     padding: 15,
     justifyContent: 'center',
+    borderRadius: 7,
   },
 
   ButtonStyle: {
     height: 50,
-    width: '95%',
+    width: '85%',
     backgroundColor: '#cc6699',
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 20,
+    borderRadius: 10,
   },
 
   container: {

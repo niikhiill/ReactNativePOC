@@ -1,20 +1,66 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
+import {
+  NavigationContainer,
+  getFocusedRouteNameFromRoute,
+} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Home from './Home';
-import Search from './Search';
 import Profile from './Profile';
-import {color} from 'react-native-reanimated';
 import HomeStack from './HomeStack';
+import searchIndex from './searchIndex';
 
 const Tab = createBottomTabNavigator();
 
 export default function index({route, navigation}) {
   return (
-    <Tab.Navigator initialRouteName="Profile">
-      <Tab.Screen name="Homestack" component={HomeStack} />
-      <Tab.Screen name="Search" component={Search} />
+    <Tab.Navigator
+      initialRouteName="Profile"
+      tabBarOptions={{
+        style: {
+          backgroundColor: '#223343',
+          height: 50,
+        },
+        labelStyle: {
+          fontSize: 15,
+          paddingBottom: 15,
+        },
+        activeTintColor: 'white',
+      }}>
+      <Tab.Screen
+        name="Homestack"
+        component={HomeStack}
+        options={({route}) => ({
+          tabBarVisible: ((route) => {
+            const routeName = getFocusedRouteNameFromRoute(route) ?? '';
+
+            if (routeName === 'Details') {
+              return false;
+            }
+            if (routeName === 'Trending') {
+              return false;
+            }
+            if (routeName === 'Upcoming') {
+              return false;
+            }
+
+            return true;
+          })(route),
+        })}
+      />
+
+      <Tab.Screen
+        name="searchIndex"
+        component={searchIndex}
+        options={({route}) => ({
+          tabBarVisible: ((route) => {
+            const routeName = getFocusedRouteNameFromRoute(route) ?? '';
+
+            if (routeName === 'Details') {
+              return false;
+            }
+            return true;
+          })(route),
+        })}
+      />
       <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
   );

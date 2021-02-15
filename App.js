@@ -1,14 +1,16 @@
 import 'react-native-gesture-handler';
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Button} from 'react-native';
 import Login from './ComponentScreens/Login';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator, HeaderBackButton} from '@react-navigation/stack';
 import index from './ComponentScreens/Tab';
+import Drawer from './ComponentScreens/Drawer/index';
+import {DrawerActions} from '@react-navigation/native';
 
 const Stack = createStackNavigator();
 
-export default function App() {
+export default function App({navigation}) {
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -16,11 +18,22 @@ export default function App() {
           name="Login"
           component={Login}
           options={{
-            headerStyle: {backgroundColor: '#193366'},
-            headerTintColor: '#fff',
+            headerShown: false,
           }}
         />
-        <Stack.Screen name="Tab" component={index} />
+        <Stack.Screen
+          name="Tab"
+          component={index}
+          options={{
+            headerLeft: () => (
+              <Button title="hello" onPress={() => alert('hello')} />
+            ),
+            headerStyle: {backgroundColor: '#193366'},
+            headerTintColor: '#fff',
+            gestureEnabled: false,
+          }}
+        />
+        <Stack.Screen name="Drawer" component={Drawer} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -11,88 +11,6 @@ import {
 } from 'react-native';
 import bgCover from '../../assets/bgimage.png';
 
-// const API_URL = 'https://api.themoviedb.org/3';
-// const API_NAME = '/trending/all/week';
-// const API_KEY = '51c5d477ec9bd7b3e52386828e267f99';
-// const IMAGE_DOMAIN_URL = 'https://image.tmdb.org/t/p/original/';
-
-class TrendingMovie extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    const {item} = this.props;
-
-    return (
-      <View style={{margin: 10, height: 300, alignItems: 'center'}}>
-        <TouchableOpacity onPress={() => alert(item.title)}>
-          <Image
-            style={{height: 250, width: 180}}
-            source={{
-              uri: 'https://image.tmdb.org/t/p/original/' + item.poster_path,
-            }}
-          />
-        </TouchableOpacity>
-
-        <View
-          style={{width: 175, alignItems: 'center', justifyContent: 'center'}}>
-          <Text style={{color: 'white', fontSize: 17}}>{item.title}</Text>
-        </View>
-
-        <View
-          style={{
-            width: 175,
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginTop: 7,
-          }}>
-          <Text style={{color: 'white', fontSize: 12}}>
-            {item.release_date}
-          </Text>
-        </View>
-      </View>
-    );
-  }
-}
-
-class UpcomingMovie extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    const {item} = this.props;
-    return (
-      <View style={{margin: 10, height: 300, alignItems: 'center'}}>
-        <TouchableOpacity onPress={() => this.props.navigation.push('Details')}>
-          <Image
-            style={{height: 250, width: 180}}
-            source={{
-              uri: 'https://image.tmdb.org/t/p/original/' + item.poster_path,
-            }}
-          />
-        </TouchableOpacity>
-        <View
-          style={{width: 175, alignItems: 'center', justifyContent: 'center'}}>
-          <Text style={{color: 'white', fontSize: 17}}>{item.title}</Text>
-        </View>
-        <View
-          style={{
-            width: 175,
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginTop: 7,
-          }}>
-          <Text style={{color: 'white', fontSize: 12}}>
-            {item.release_date}
-          </Text>
-        </View>
-      </View>
-    );
-  }
-}
-
 export default class Home extends Component {
   constructor(props) {
     super(props);
@@ -101,6 +19,38 @@ export default class Home extends Component {
       moviesUpcoming: [],
     };
   }
+
+  // UpcomingMovie({item}) {
+  //   // const {item} = this.props;
+  //   return (
+  //     <View style={{margin: 10, height: 300, alignItems: 'center'}}>
+  //       <TouchableOpacity onPress={() => alert(item.title)}>
+  //         <Image
+  //           style={{height: 250, width: 180, borderRadius: 17}}
+  //           source={{
+  //             uri: 'https://image.tmdb.org/t/p/original/' + item.poster_path,
+  //           }}
+  //         />
+  //       </TouchableOpacity>
+  //       <View
+  //         style={{width: 175, alignItems: 'center', justifyContent: 'center'}}>
+  //         <Text style={{color: 'white', fontSize: 17}}>{item.title}</Text>
+  //       </View>
+  //       <View
+  //         style={{
+  //           width: 175,
+  //           alignItems: 'center',
+  //           justifyContent: 'center',
+  //           marginTop: 7,
+  //         }}>
+  //         <Text style={{color: 'white', fontSize: 12}}>
+  //           {item.release_date}
+  //         </Text>
+  //       </View>
+  //     </View>
+  //   );
+  // }
+
   componentDidMount() {
     this.fetchTrendingMovies();
     this.fetchUpcomingingMovies();
@@ -108,7 +58,7 @@ export default class Home extends Component {
 
   fetchTrendingMovies() {
     fetch(
-      'https://api.themoviedb.org/3/trending/movie/week?api_key=51c5d477ec9bd7b3e52386828e267f99',
+      'https://api.themoviedb.org/3/trending/movie/day?api_key=51c5d477ec9bd7b3e52386828e267f99',
     )
       .then((response) => response.json())
       .then((responseJson) => {
@@ -146,11 +96,13 @@ export default class Home extends Component {
                 justifyContent: 'space-between',
                 paddingBottom: 18,
                 alignItems: 'center',
+                marginTop: 20,
               }}>
               <Text style={{color: 'white', fontSize: 25}}>Trending Now</Text>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('Trending')}>
                 <Text style={{color: '#193366', fontSize: 18, marginEnd: 15}}>
-                  See All{'>'}
+                  Show All{'>'}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -158,7 +110,52 @@ export default class Home extends Component {
             <FlatList
               horizontal={true}
               data={moviesTrending.results}
-              renderItem={({item}) => <TrendingMovie item={item} />}
+              renderItem={({item}) => (
+                <View style={{margin: 10, height: 320, alignItems: 'center'}}>
+                  <TouchableOpacity
+                    onPress={() =>
+                      this.props.navigation.navigate('Details', {
+                        title: item.title,
+                        overview: item.overview,
+                        poster_path: item.poster_path,
+                        date: item.release_date,
+                        popularity: item.popularity,
+                        genre: item.genre_ids,
+                        vote: item.vote_average,
+                      })
+                    }>
+                    <Image
+                      style={{height: 250, width: 180, borderRadius: 17}}
+                      source={{
+                        uri:
+                          'https://image.tmdb.org/t/p/original/' +
+                          item.poster_path,
+                      }}
+                    />
+                  </TouchableOpacity>
+                  <View
+                    style={{
+                      width: 175,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                    <Text style={{color: 'white', fontSize: 17}}>
+                      {item.title}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      width: 175,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      marginTop: 7,
+                    }}>
+                    <Text style={{color: 'white', fontSize: 12}}>
+                      {item.release_date}
+                    </Text>
+                  </View>
+                </View>
+              )}
               keyExtractor={(item, key) => key.toString()}
               showsHorizontalScrollIndicator={false}></FlatList>
           </View>
@@ -174,8 +171,10 @@ export default class Home extends Component {
               <Text style={{color: 'white', fontSize: 25}}>Upcoming</Text>
 
               <TouchableOpacity>
-                <Text style={{color: '#193366', fontSize: 18, marginEnd: 15}}>
-                  See All{'>'}
+                <Text
+                  style={{color: '#193366', fontSize: 18, marginEnd: 15}}
+                  onPress={() => this.props.navigation.navigate('Upcoming')}>
+                  Show All{'>'}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -183,7 +182,52 @@ export default class Home extends Component {
             <FlatList
               horizontal={true}
               data={moviesUpcoming.results}
-              renderItem={({item}) => <UpcomingMovie item={item} />}
+              renderItem={({item}) => (
+                <View style={{margin: 10, height: 320, alignItems: 'center'}}>
+                  <TouchableOpacity
+                    onPress={() =>
+                      this.props.navigation.navigate('Details', {
+                        title: item.title,
+                        overview: item.overview,
+                        poster_path: item.poster_path,
+                        date: item.release_date,
+                        popularity: item.popularity,
+                        genre: item.genre_ids,
+                        vote: item.vote_average,
+                      })
+                    }>
+                    <Image
+                      style={{height: 250, width: 180, borderRadius: 17}}
+                      source={{
+                        uri:
+                          'https://image.tmdb.org/t/p/original/' +
+                          item.poster_path,
+                      }}
+                    />
+                  </TouchableOpacity>
+                  <View
+                    style={{
+                      width: 175,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                    <Text style={{color: 'white', fontSize: 17}}>
+                      {item.title}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      width: 175,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      marginTop: 7,
+                    }}>
+                    <Text style={{color: 'white', fontSize: 12}}>
+                      {item.release_date}
+                    </Text>
+                  </View>
+                </View>
+              )}
               keyExtractor={(item, key) => key.toString()}
               showsHorizontalScrollIndicator={false}></FlatList>
           </View>
@@ -195,8 +239,7 @@ export default class Home extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingTop: 25,
     paddingLeft: 10,
+    paddingBottom: 100,
   },
 });

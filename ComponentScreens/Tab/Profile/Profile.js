@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   BackHandler,
 } from 'react-native';
-import bgCover from '../../assets/bgimage.png';
+import bgCover from '../../../assets/bgimage.png';
 import {useRoute, useFocusEffect} from '@react-navigation/native';
 
 export const handleBackButton = () => {

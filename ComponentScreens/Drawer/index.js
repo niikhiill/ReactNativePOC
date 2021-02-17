@@ -15,10 +15,10 @@ function Settings() {
 
 export default function index() {
   return (
-    <NavigationContainer>
-      <Drawer.Navigator>
-        <Drawer.Screen name="Settings" component={Settings} />
-      </Drawer.Navigator>
-    </NavigationContainer>
+    // <NavigationContainer>
+    <Drawer.Navigator>
+      <Drawer.Screen name="Settings" component={Settings} />
+    </Drawer.Navigator>
+    // </NavigationContainer>
   );
 }

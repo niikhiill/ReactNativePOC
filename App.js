@@ -6,7 +6,6 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator, HeaderBackButton} from '@react-navigation/stack';
 import index from './ComponentScreens/Tab';
 import Drawer from './ComponentScreens/Drawer/index';
-import {DrawerActions} from '@react-navigation/native';
 
 const Stack = createStackNavigator();
 

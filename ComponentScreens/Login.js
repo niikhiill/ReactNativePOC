@@ -76,11 +76,17 @@ export default class Login extends Component {
             style={styles.ButtonStyle}
             onPress={() =>
               this.validateFields()
-                ? this.props.navigation.navigate('Tab', {
-                    screen: 'Profile',
-                    params: {mail},
+                ? this.props.navigation.navigate('DrawerStack', {
+                    screen: 'TabStack',
+                    params: {
+                      mail: mail,
+                    },
                   })
-                : null
+                : // 'Tab', {
+                  //   screen: 'Profile',
+                  //   params: {mail},
+                  // })
+                  null
             }>
             <Text style={{color: 'white', fontSize: 20}}>Sign In</Text>
           </TouchableOpacity>

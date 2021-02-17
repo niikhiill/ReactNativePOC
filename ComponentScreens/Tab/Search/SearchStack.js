@@ -20,16 +20,16 @@ export default function SearchStack({navigation}) {
 
   const [state, setState] = useState({
     s: 'enter a movie...',
-    results: [],
+    movies: [],
     selected: {},
   });
 
   const search = () => {
     axios(apiurl + '&query=' + state.s).then(({data}) => {
-      let results = data.results;
+      let movies = data.results;
       // console.log(results);
       setState((prevState) => {
-        return {prevState, results: results};
+        return {prevState, movies: movies};
       });
     });
   };
@@ -48,9 +48,8 @@ export default function SearchStack({navigation}) {
           onSubmitEditing={search}
           autoCorrect={false}
         />
-
         <ScrollView style={styles.results}>
-          {state.results.map((result) => (
+          {state.movies.map((result) => (
             <TouchableOpacity
               key={result.id}
               onPress={() =>

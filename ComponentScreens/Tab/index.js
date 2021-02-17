@@ -1,4 +1,5 @@
 import React from 'react';
+import {Text} from 'react-native';
 import {
   NavigationContainer,
   getFocusedRouteNameFromRoute,
@@ -11,6 +12,8 @@ import searchIndex from './Search/searchIndex';
 const Tab = createBottomTabNavigator();
 
 export default function index({route, navigation}) {
+  const {mail} = route.params;
+  const YourComponent = () => <Profile mail={mail} />;
   return (
     <Tab.Navigator
       initialRouteName="Profile"
@@ -61,7 +64,15 @@ export default function index({route, navigation}) {
           })(route),
         })}
       />
-      <Tab.Screen name="Profile" component={Profile} />
+      <Tab.Screen
+        name="Profile"
+        component={Profile}
+        initialParams={{mail: mail}}
+      />
+
+      {/* <Tab.Screen name="Profile" component={YourComponent} /> */}
+      {/* <Tab.Screen name="Profile" children={() => <Profile mail={mail} />} /> */}
     </Tab.Navigator>
+    // <Text>{mail}</Text>
   );
 }

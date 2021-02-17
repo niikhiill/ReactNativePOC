@@ -4,9 +4,9 @@ import {
   getFocusedRouteNameFromRoute,
 } from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Profile from './Profile';
-import HomeStack from './HomeStack';
-import searchIndex from './searchIndex';
+import Profile from './Profile/Profile';
+import HomeStack from './Home/HomeStack';
+import searchIndex from './Search/searchIndex';
 
 const Tab = createBottomTabNavigator();
 

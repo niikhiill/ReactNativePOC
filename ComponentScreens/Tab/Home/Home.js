@@ -9,7 +9,7 @@ import {
   ImageBackground,
   ScrollView,
 } from 'react-native';
-import bgCover from '../../assets/bgimage.png';
+import bgCover from '../../../assets/bgimage.png';
 
 export default class Home extends Component {
   constructor(props) {

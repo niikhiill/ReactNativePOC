@@ -9,27 +9,27 @@ import {
   ImageBackground,
   ScrollView,
 } from 'react-native';
-import bgCover from '../../assets/bgimage.png';
+import bgCover from '../../../assets/bgimage.png';
 
-export default class Trending extends Component {
+export default class Upcoming extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      moviesTrending: [],
+      moviesUpcoming: [],
     };
   }
 
   componentDidMount() {
-    this.fetchTrendingMovies();
+    this.fetchUpcomingingMovies();
   }
 
-  fetchTrendingMovies() {
+  fetchUpcomingingMovies() {
     fetch(
-      'https://api.themoviedb.org/3/trending/movie/day?api_key=51c5d477ec9bd7b3e52386828e267f99',
+      'https://api.themoviedb.org/3/movie/upcoming?api_key=51c5d477ec9bd7b3e52386828e267f99&region=US',
     )
       .then((response) => response.json())
       .then((responseJson) => {
-        this.setState({moviesTrending: responseJson});
+        this.setState({moviesUpcoming: responseJson});
       })
       .catch((error) => {
         console.log('Data fetching failed');
@@ -37,7 +37,7 @@ export default class Trending extends Component {
   }
 
   render() {
-    const {moviesTrending} = this.state;
+    const {moviesUpcoming} = this.state;
     return (
       <ImageBackground source={bgCover} style={{height: '100%', width: '100%'}}>
         <View style={{flex: 1, alignItems: 'center'}}>
@@ -47,13 +47,13 @@ export default class Trending extends Component {
               fontSize: 25,
               padding: 20,
             }}>
-            Trending Now
+            Upcoming
           </Text>
 
           <FlatList
             showsVerticalScrollIndicator={false}
             numColumns="2"
-            data={moviesTrending.results}
+            data={moviesUpcoming.results}
             renderItem={({item}) => (
               <View style={{margin: 10, height: 320}}>
                 <TouchableOpacity

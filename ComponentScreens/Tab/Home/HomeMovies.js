@@ -20,37 +20,6 @@ export default class Home extends Component {
     };
   }
 
-  // UpcomingMovie({item}) {
-  //   // const {item} = this.props;
-  //   return (
-  //     <View style={{margin: 10, height: 300, alignItems: 'center'}}>
-  //       <TouchableOpacity onPress={() => alert(item.title)}>
-  //         <Image
-  //           style={{height: 250, width: 180, borderRadius: 17}}
-  //           source={{
-  //             uri: 'https://image.tmdb.org/t/p/original/' + item.poster_path,
-  //           }}
-  //         />
-  //       </TouchableOpacity>
-  //       <View
-  //         style={{width: 175, alignItems: 'center', justifyContent: 'center'}}>
-  //         <Text style={{color: 'white', fontSize: 17}}>{item.title}</Text>
-  //       </View>
-  //       <View
-  //         style={{
-  //           width: 175,
-  //           alignItems: 'center',
-  //           justifyContent: 'center',
-  //           marginTop: 7,
-  //         }}>
-  //         <Text style={{color: 'white', fontSize: 12}}>
-  //           {item.release_date}
-  //         </Text>
-  //       </View>
-  //     </View>
-  //   );
-  // }
-
   componentDidMount() {
     this.fetchTrendingMovies();
     this.fetchUpcomingingMovies();
@@ -90,14 +59,7 @@ export default class Home extends Component {
           style={styles.container}
           showsVerticalScrollIndicator={false}>
           <View style={{flex: 1}}>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                paddingBottom: 18,
-                alignItems: 'center',
-                marginTop: 20,
-              }}>
+            <View style={styles.ViewStyle}>
               <Text style={{color: 'white', fontSize: 25}}>Trending Now</Text>
               <TouchableOpacity
                 onPress={() => this.props.navigation.navigate('Trending')}>
@@ -241,5 +203,12 @@ const styles = StyleSheet.create({
   container: {
     paddingLeft: 10,
     paddingBottom: 100,
+  },
+  ViewStyle: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingBottom: 18,
+    alignItems: 'center',
+    marginTop: 20,
   },
 });

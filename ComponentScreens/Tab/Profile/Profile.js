@@ -8,25 +8,12 @@ import {
   BackHandler,
 } from 'react-native';
 import bgCover from '../../../assets/bgimage.png';
-import {useRoute, useFocusEffect} from '@react-navigation/native';
-
-export const handleBackButton = () => {
-  // ToastAndroid.show('Back button is pressed', ToastAndroid.SHORT);
-  return true;
-};
+import {useFocusEffect} from '@react-navigation/native';
 
 export default function Profile({route, navigation}) {
   const {mail} = route.params;
 
-  // useEffect(() => {
-  //   const unsubscribe = BackHandler.addEventListener(
-  //     'hardwareBackPress',
-  //     handleBackButton,
-  //   );
-
-  //   return () => true;
-  // }, []);
-
+  //Used to prevent android back button
   useFocusEffect(
     React.useCallback(() => {
       const onBackPress = () => {
@@ -47,11 +34,11 @@ export default function Profile({route, navigation}) {
   return (
     <ImageBackground source={bgCover} style={{height: '100%', width: '100%'}}>
       <View style={styles.ViewStyle}>
-        <Text style={styles.title}>Welcome {mail}</Text>
+        <Text style={styles.Title}>Welcome {mail} !</Text>
         <TouchableOpacity
           style={{marginTop: 15}}
           onPress={() => navigation.navigate('Login')}>
-          <Text style={{fontSize: 20, color: 'blue'}}>LogOut</Text>
+          <Text style={styles.Logout}>LogOut</Text>
         </TouchableOpacity>
       </View>
     </ImageBackground>
@@ -61,12 +48,17 @@ export default function Profile({route, navigation}) {
 const styles = StyleSheet.create({
   ViewStyle: {
     flex: 1,
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'center',
   },
-  title: {
+  Title: {
     fontSize: 30,
     color: 'white',
+    fontWeight: 'bold',
+  },
+  Logout: {
+    fontSize: 20,
+    color: '#223343',
     fontWeight: 'bold',
   },
 });

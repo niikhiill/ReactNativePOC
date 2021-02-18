@@ -1,36 +1,32 @@
 import React from 'react';
-import {Text} from 'react-native';
-import {
-  NavigationContainer,
-  getFocusedRouteNameFromRoute,
-} from '@react-navigation/native';
+import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Profile from './Profile/Profile';
-import HomeStack from './Home/HomeStack';
-import searchIndex from './Search/searchIndex';
+import Home from './Home';
+import Search from './Search';
 
 const Tab = createBottomTabNavigator();
 
-export default function index({route, navigation}) {
+export default function index({route}) {
   const {mail} = route.params;
-  const YourComponent = () => <Profile mail={mail} />;
   return (
     <Tab.Navigator
       initialRouteName="Profile"
       tabBarOptions={{
         style: {
           backgroundColor: '#223343',
-          height: 50,
         },
         labelStyle: {
           fontSize: 15,
-          paddingBottom: 15,
+          paddingBottom: 10,
         },
         activeTintColor: 'white',
+        activeBackgroundColor: '#ac3973',
       }}>
       <Tab.Screen
-        name="Homestack"
-        component={HomeStack}
+        name="Home"
+        component={Home}
+        //used to hide bottomtab in specific screens
         options={({route}) => ({
           tabBarVisible: ((route) => {
             const routeName = getFocusedRouteNameFromRoute(route) ?? '';
@@ -51,8 +47,9 @@ export default function index({route, navigation}) {
       />
 
       <Tab.Screen
-        name="searchIndex"
-        component={searchIndex}
+        name="Search"
+        component={Search}
+        //used to hide bottomtab in specific screens
         options={({route}) => ({
           tabBarVisible: ((route) => {
             const routeName = getFocusedRouteNameFromRoute(route) ?? '';
@@ -69,10 +66,6 @@ export default function index({route, navigation}) {
         component={Profile}
         initialParams={{mail: mail}}
       />
-
-      {/* <Tab.Screen name="Profile" component={YourComponent} /> */}
-      {/* <Tab.Screen name="Profile" children={() => <Profile mail={mail} />} /> */}
     </Tab.Navigator>
-    // <Text>{mail}</Text>
   );
 }

@@ -47,63 +47,77 @@ export default class Upcoming extends Component {
               fontSize: 25,
               padding: 20,
             }}>
-            Upcoming
+            Upcoming Movies
           </Text>
+        </View>
 
-          <FlatList
-            showsVerticalScrollIndicator={false}
-            numColumns="2"
-            data={moviesUpcoming.results}
-            renderItem={({item}) => (
-              <View style={{margin: 10, height: 320}}>
-                <TouchableOpacity
-                  onPress={() =>
-                    this.props.navigation.navigate('Details', {
-                      title: item.title,
-                      overview: item.overview,
-                      poster_path: item.poster_path,
-                      date: item.release_date,
-                      popularity: item.popularity,
-                      genre: item.genre_ids,
-                      vote: item.vote_average,
-                    })
-                  }>
-                  <Image
-                    style={{height: 250, width: 180, borderRadius: 17}}
-                    source={{
-                      uri:
-                        'https://image.tmdb.org/t/p/original/' +
-                        item.poster_path,
-                    }}
-                  />
-                </TouchableOpacity>
-
+        <View style={{flex: 8, alignItems: 'center', justifyContent: 'center'}}>
+          <View style={{width: '95%'}}>
+            <FlatList
+              showsVerticalScrollIndicator={false}
+              numColumns="2"
+              data={moviesUpcoming.results}
+              renderItem={({item}) => (
                 <View
                   style={{
-                    width: 175,
-                    alignItems: 'center',
-                    justifyContent: 'center',
+                    marginHorizontal: 10,
+                    marginBottom: 70,
+                    height: 280,
+                    width: '45%',
                   }}>
-                  <Text style={{color: 'white', fontSize: 17}}>
-                    {item.title}
-                  </Text>
-                </View>
+                  <TouchableOpacity
+                    onPress={() =>
+                      this.props.navigation.navigate('Details', {
+                        title: item.title,
+                        overview: item.overview,
+                        poster_path: item.poster_path,
+                        date: item.release_date,
+                        popularity: item.popularity,
+                        genre: item.genre_ids,
+                        vote: item.vote_average,
+                      })
+                    }>
+                    <Image
+                      style={{
+                        height: '100%',
+                        width: '100%',
+                        borderRadius: 17,
+                        resizeMode: 'contain',
+                      }}
+                      source={{
+                        uri:
+                          'https://image.tmdb.org/t/p/original/' +
+                          item.poster_path,
+                      }}
+                    />
+                  </TouchableOpacity>
 
-                <View
-                  style={{
-                    width: 175,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    marginTop: 7,
-                  }}>
-                  <Text style={{color: 'white', fontSize: 12}}>
-                    {item.release_date}
-                  </Text>
+                  <View
+                    style={{
+                      width: '100%',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                    <Text style={{color: 'white', fontSize: 17}}>
+                      {item.title}
+                    </Text>
+                  </View>
+
+                  <View
+                    style={{
+                      width: '100%',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                    <Text style={{color: 'white', fontSize: 12}}>
+                      {item.release_date}
+                    </Text>
+                  </View>
                 </View>
-              </View>
-            )}
-            keyExtractor={(item, key) => key.toString()}
-            showsHorizontalScrollIndicator={false}></FlatList>
+              )}
+              keyExtractor={(item, key) => key.toString()}
+              showsHorizontalScrollIndicator={false}></FlatList>
+          </View>
         </View>
       </ImageBackground>
     );

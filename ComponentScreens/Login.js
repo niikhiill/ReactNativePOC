@@ -19,7 +19,7 @@ export default class Login extends Component {
     };
   }
 
-  validateFields = () => {
+  isValidFields = () => {
     const {mail, password} = this.state;
 
     const mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -75,18 +75,14 @@ export default class Login extends Component {
           <TouchableOpacity
             style={styles.ButtonStyle}
             onPress={() =>
-              this.validateFields()
-                ? this.props.navigation.navigate('DrawerStack', {
-                    screen: 'TabStack',
+              this.isValidFields()
+                ? this.props.navigation.navigate('Drawer', {
+                    screen: 'Tab',
                     params: {
                       mail: mail,
                     },
                   })
-                : // 'Tab', {
-                  //   screen: 'Profile',
-                  //   params: {mail},
-                  // })
-                  null
+                : null
             }>
             <Text style={{color: 'white', fontSize: 20}}>Sign In</Text>
           </TouchableOpacity>

@@ -11,23 +11,19 @@ import {
   ImageBackground,
 } from 'react-native';
 import bgCover from '../../../assets/bgimage.png';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
 
 export default function SearchStack({navigation}) {
   const apiurl =
     'https://api.themoviedb.org/3/search/movie?api_key=51c5d477ec9bd7b3e52386828e267f99';
 
   const [state, setState] = useState({
-    s: 'enter a movie...',
     movies: [],
-    selected: {},
   });
 
   const search = () => {
-    axios(apiurl + '&query=' + state.s).then(({data}) => {
+    axios(apiurl + '&query=' + state.text).then(({data}) => {
       let movies = data.results;
-      // console.log(results);
+      // console.log(movies);
       setState((prevState) => {
         return {prevState, movies: movies};
       });
@@ -38,10 +34,10 @@ export default function SearchStack({navigation}) {
     <ImageBackground source={bgCover} style={{height: '100%', width: '100%'}}>
       <View style={styles.container}>
         <TextInput
-          style={styles.searchbox}
+          style={styles.searchBox}
           onChangeText={(text) =>
             setState((prevState) => {
-              return {...prevState, s: text};
+              return {...prevState, text: text};
             })
           }
           placeholder="Search..."
@@ -49,18 +45,18 @@ export default function SearchStack({navigation}) {
           autoCorrect={false}
         />
         <ScrollView style={styles.results}>
-          {state.movies.map((result) => (
+          {state.movies.map((movie) => (
             <TouchableOpacity
-              key={result.id}
+              key={movie.id}
               onPress={() =>
                 navigation.navigate('Details', {
-                  title: result.title,
-                  overview: result.overview,
-                  poster_path: result.poster_path,
-                  date: result.release_date,
-                  popularity: result.popularity,
-                  genre: result.genre_ids,
-                  vote: result.vote_average,
+                  title: movie.title,
+                  overview: movie.overview,
+                  poster_path: movie.poster_path,
+                  date: movie.release_date,
+                  popularity: movie.popularity,
+                  genre: movie.genre_ids,
+                  vote: movie.vote_average,
                 })
               }>
               <View style={styles.result}>
@@ -68,7 +64,7 @@ export default function SearchStack({navigation}) {
                   source={{
                     uri:
                       'https://image.tmdb.org/t/p/original/' +
-                      result.poster_path,
+                      movie.poster_path,
                   }}
                   style={{
                     width: 70,
@@ -78,8 +74,8 @@ export default function SearchStack({navigation}) {
                   backgroundColor="#445565"
                 />
                 <View style={{width: '75%'}}>
-                  <Text style={styles.heading}>{result.title}</Text>
-                  <Text style={styles.datestyle}>{result.release_date}</Text>
+                  <Text style={styles.heading}>{movie.title}</Text>
+                  <Text style={styles.datestyle}>{movie.release_date}</Text>
                 </View>
               </View>
             </TouchableOpacity>
@@ -97,7 +93,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
 
-  searchbox: {
+  searchBox: {
     fontSize: 18,
     fontWeight: '300',
     width: '90%',
@@ -118,14 +114,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderColor: '#fff',
     borderBottomWidth: 1,
-    // alignItems: 'center',
   },
   heading: {
     color: '#fff',
     fontSize: 18,
     fontWeight: '700',
     padding: 10,
-    // backgroundColor: '#708090',
     width: '75%',
   },
   datestyle: {
@@ -133,7 +127,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '700',
     marginLeft: 10,
-    // backgroundColor: '#708090',
     width: '75%',
   },
 });

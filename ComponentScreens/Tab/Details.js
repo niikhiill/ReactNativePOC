@@ -22,6 +22,9 @@ export default function Details({route}) {
               style={{
                 shadowOpacity: 200,
                 shadowColor: 'black',
+                height: 400,
+                width: 200,
+                margin: 10,
               }}>
               <Image
                 style={styles.imageStyle}
@@ -60,11 +63,9 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   imageStyle: {
-    height: 400,
-    width: 250,
-    marginTop: 20,
-    marginLeft: 20,
-    marginRight: 10,
+    height: '100%',
+    width: '100%',
+    resizeMode: 'contain',
   },
   titleStyle: {
     fontSize: 30,
